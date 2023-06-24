@@ -1,7 +1,6 @@
 #ifndef _MONTY_H_
 #define _MONTY_H_
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -10,6 +9,7 @@
 #include <ctype.h>
 #include <stddef.h>
 #include <string.h>
+#include <stdio.h>
 
 #define STACK_SIZE 1024
 #define DELIMS " \n\t\a\b"
@@ -31,26 +31,25 @@ typedef struct stack_s
 } stack_t;
 
 /**
- * struct globals - global structure to use in the functions
+ * struct var_s - global structure to use in the functions
  * @lifo: is stack or queue
  * @currt: current line
  * @arg: second parameter inside the current line
- * @head: doubly linked list
+ * @h: doubly linked list
  * @fd: file descriptor
  * @buffer: input text
- *
- * Description: doubly linked list node structure
+ * Description: the doubly linked list node structure
  * for stack, queues, LIFO, FIFO Holberton project
  */
-typedef struct globals
+typedef struct var_s
 {
 	int lifo;
 	unsigned int currt;
 	char  *arg;
-	stack_t *head;
+	stack_t *h;
 	FILE *fd;
 	char *buffer;
-} global_t;
+} var_t;
 
 /**
  * struct instruction_s - opcode and its function
@@ -66,7 +65,8 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-extern global_t ops;
+extern var_t ops;
+var_t ops;
 
 void op_push(stack_t **stack, unsigned int line_number);
 void op_pall(stack_t **stack, unsigned int line_number);
@@ -90,14 +90,15 @@ void (*get_opcodes(char *opc))(stack_t **stack, unsigned int line_number);
 
 int _sch(char *s, char c);
 char *_strtoky(char *s, char *d);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-void *_calloc(unsigned int nmemb, unsigned int size);
+void *_realloc(void *ptrs, unsigned int old_sizes, unsigned int new_sizes);
+void *_calloc(unsigned int nmemb, unsigned int sizes);
 int _strcmp(char *s1, char *s2);
 
-stack_t *add_dnodeint_end(stack_t **head, const int n);
-stack_t *add_dnodeint(stack_t **head, const int n);
-void free_dlistint(stack_t *head);
+stack_t *add_dnodeint_end(stack_t **h, const int n);
+stack_t *add_dnodeint(stack_t **h, const int n);
+void free_dlistint(stack_t *h);
 
 void free_ops(void);
+void start_ops(FILE *fd);
 
 #endif
