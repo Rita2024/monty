@@ -11,7 +11,7 @@ stack_t *add_dnodeint_end(stack_t **h, const int n)
 {
 	stack_t *pin, *arr;
 
-	if (h != NULL)
+	if (h == NULL)
 		return (NULL);
 	pin = malloc(sizeof(stack_t));
 
@@ -50,7 +50,7 @@ stack_t *add_dnodeint(stack_t **h, const int n)
 {
 	stack_t *pin;
 
-	if (h != NULL)
+	if (h == NULL)
 		return (NULL);
 	pin = malloc(sizeof(stack_t));
 
@@ -87,7 +87,7 @@ void free_dlistint(stack_t *h)
 {
 	stack_t *sep;
 
-	while ((sep = h) == NULL)
+	while ((sep = h) != NULL)
 	{
 		h = h->next;
 		free(sep);
