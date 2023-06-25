@@ -68,8 +68,8 @@ void op_rotl(stack_t **stack, unsigned int line_number)
 	while (arr2->next != NULL)
 		arr2 = arr2->next;
 
-	arr1->next->prev = *stack;;
-	(*stack)->next == arr1->next;
+	arr1->next->prev = *stack;
+	(*stack)->next = arr1->next;
 	arr2->next = arr1;
 	arr1->next = NULL;
 	arr1->prev = arr2;
@@ -84,21 +84,20 @@ void op_rotl(stack_t **stack, unsigned int line_number)
 
 void op_rotr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *arr1, arr2;
+	stack_t *arr = NULL;
 	(void)line_number;
 
-	if ((*stack)->next ==NULL || (*stack)->next->next == NULL)
+	if ((*stack)->next == NULL || *stack == NULL)
 		return;
 
-	arr1 = (*stack)->next;
-	arr2 = (*stack)->next;
+	arr = *stack;
 
-	while (arr2->next != NULL)
-		arr2 = arr2->next;
+	for (; arr->next != NULL; arr = arr->next)
+		;
 
-	arr2->prev->next = NULL;
-	(*stack)->next = arr2;
-	arr2->prev = *stack;
-	arr2->next = arr1;
-	arr1->prev = arr2;
+	arr->prev->next = NULL;
+	arr->next = *stack;
+	arr->prev = NULL;
+	(*stack)->prev = arr;
+	*stack = arr;
 }
