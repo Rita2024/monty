@@ -9,21 +9,21 @@
 
 void op_pchar(stack_t **stack, unsigned int line_number)
 {
-	if (stack == NULL || *stack == NULL)
+	if ((*stack)->next == NULL)
 	{
 		fprintf(stderr, "L%u: can't pchar, stack empty\n", line_number);
 		free_ops();
 		exit(EXIT_FAILURE);
 	}
 
-	if ((*stack)->n < 0 || (*stack)->n >= 128)
+	if ((*stack)->next->n < 0 || (*stack)->next->n > 127)
 	{
 		fprintf(stderr, "L%u: can't pchar, value out of range\n", line_number);
 		free_ops();
 		exit(EXIT_FAILURE);
 	}
 
-	printf("%c\n", (*stack)->n);
+	printf("%c\n", (*stack)->next->n);
 }
 
 /**
@@ -35,12 +35,10 @@ void op_pchar(stack_t **stack, unsigned int line_number)
 
 void op_pstr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *arr;
+	stack_t *arr = (*stack)->next;
 	(void)line_number;
 
-	arr = *stack;
-
-	while (arr && arr->n > 0 && arr->n < 128)
+	while (arr && arr->n != 0 && (arr->n > 0 && arr->n <= 127))
 	{
 		printf("%c", arr->n);
 		arr = arr->next;
@@ -58,27 +56,23 @@ void op_pstr(stack_t **stack, unsigned int line_number)
 
 void op_rotl(stack_t **stack, unsigned int line_number)
 {
-	stack_t *arr1 = NULL;
-	stack_t *arr2 = NULL;
+	stack_t *arr1, *arr2;
 	(void)line_number;
 
-	if (*stack == NULL)
-		return;
-
-	if ((*stack)->next == NULL)
+	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 		return;
 
 	arr1 = (*stack)->next;
-	arr2 = *stack;
+	arr2 = (*stack)->next;
 
-	for (; arr2->next != NULL; arr2 = arr2->next)
-		;
+	while (arr2->next != NULL)
+		arr2 = arr2->next;
 
-	arr1->prev = NULL;
-	arr2->next = *stack;
-	(*stack)->next = NULL;
-	(*stack)->prev = arr2;
-	*stack = arr1;
+	arr1->next->prev = *stack;;
+	(*stack)->next == arr1->next;
+	arr2->next = arr1;
+	arr1->next = NULL;
+	arr1->prev = arr2;
 }
 
 /**
@@ -90,23 +84,21 @@ void op_rotl(stack_t **stack, unsigned int line_number)
 
 void op_rotr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *arr = NULL;
+	stack_t *arr1, arr2;
 	(void)line_number;
 
-	if (*stack == NULL)
+	if ((*stack)->next ==NULL || (*stack)->next->next == NULL)
 		return;
 
-	if ((*stack)->next == NULL)
-		return;
+	arr1 = (*stack)->next;
+	arr2 = (*stack)->next;
 
-	arr = *stack;
+	while (arr2->next != NULL)
+		arr2 = arr2->next;
 
-	for (; arr->next != NULL; arr = arr->next)
-		;
-
-	arr->prev->next = NULL;
-	arr->next = *stack;
-	arr->prev = NULL;
-	(*stack)->prev = arr;
-	*stack = arr;
+	arr2->prev->next = NULL;
+	(*stack)->next = arr2;
+	arr2->prev = *stack;
+	arr2->next = arr1;
+	arr1->prev = arr2;
 }

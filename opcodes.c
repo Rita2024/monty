@@ -110,12 +110,12 @@ void op_pop(stack_t **stack, unsigned int line_number)
 
 void op_swap(stack_t **stack, unsigned int line_number)
 {
-	int r = 0;
+	int r;
 	stack_t *arr = NULL;
 
 	arr = *stack;
 
-	for (; arr != NULL; arr = arr->next, r++)
+	for (r = 0; arr != NULL; arr = arr->next, r++)
 		;
 
 	if (r < 2)

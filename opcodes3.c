@@ -9,12 +9,12 @@
 
 void op_div(stack_t **stack, unsigned int line_number)
 {
-	int x = 0;
+	int x;
 	stack_t *arr = NULL;
 
 	arr = *stack;
 
-	for (; arr != NULL; arr = arr->next, x++)
+	for (x = 0; arr != NULL; arr = arr->next, x++)
 		;
 
 	if (x < 2)
@@ -45,12 +45,12 @@ void op_div(stack_t **stack, unsigned int line_number)
 
 void op_mul(stack_t **stack, unsigned int line_number)
 {
-	int x = 0;
+	int x;
 	stack_t *arr = NULL;
 
 	arr = *stack;
 
-	for (; arr != NULL; arr = arr->next, x++)
+	for (x = 0; arr != NULL; arr = arr->next, x++)
 		;
 
 	if (x < 2)
@@ -75,12 +75,12 @@ void op_mul(stack_t **stack, unsigned int line_number)
 
 void op_mod(stack_t **stack, unsigned int line_number)
 {
-	int t = 0;
+	int t;
 	stack_t *arr = NULL;
 
 	arr = *stack;
 
-	for (; arr != NULL; arr = arr->next, t++)
+	for (t = 0; arr != NULL; arr = arr->next, t++)
 		;
 
 	if (t < 2)
