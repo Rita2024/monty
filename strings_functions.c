@@ -9,9 +9,9 @@
 
 int _strcmp(char *s1, char *s2)
 {
-	int m = 0;
+	int m;
 
-	for (; s1[m] == s2[m] && s1[m]; m++)
+	for (m = 0; s1[m] == s2[m] && s1[m]; m++)
 		;
 	if (s1[m] > s2[m])
 	{

@@ -28,12 +28,12 @@ void (*get_opcodes(char *opc))(stack_t **stack, unsigned int line_number)
 		{"rotr", op_rotr},
 		{NULL, NULL}
 	};
-	int r = 0;
+	int r;
 
-	for (; instruct[r].opcode; r++)
+	for (r = 0; instruct[r].opcode; r++)
 	{
 		if (_strcmp(instruct[r].opcode, opc) == 0)
-			break;
+			return (instruct[r].f);
 	}
-	return (instruct[r].f);
+	return (NULL);
 }
